@@ -94,19 +94,60 @@ Value: [Your hosting provider's address]
 ```
 
 ### For GitHub Pages specifically:
+**Your GitHub Pages URL**: https://michaelwalker-git.github.io/artukovich-builders/
+
+**Exact DNS Records to Add in Google Domains:**
+
 ```
 Type: A
-Name: @
-Values: 
-- 185.199.108.153
-- 185.199.109.153
-- 185.199.110.153
-- 185.199.111.153
+Name: @ (or leave blank)
+Value: 185.199.108.153
+TTL: 3600 (or default)
+
+Type: A  
+Name: @ (or leave blank)
+Value: 185.199.109.153
+TTL: 3600 (or default)
+
+Type: A
+Name: @ (or leave blank) 
+Value: 185.199.110.153
+TTL: 3600 (or default)
+
+Type: A
+Name: @ (or leave blank)
+Value: 185.199.111.153
+TTL: 3600 (or default)
 
 Type: CNAME
 Name: www
-Value: yourusername.github.io
+Value: michaelwalker-git.github.io
+TTL: 3600 (or default)
 ```
+
+**Step-by-Step GitHub Pages Custom Domain Setup:**
+
+1. **In GitHub (Your Repository Settings):**
+   - Go to https://github.com/michaelwalker-git/artukovich-builders
+   - Click "Settings" tab
+   - Scroll down to "Pages" section
+   - Under "Custom domain", enter your domain (e.g., `artukovichbuilders.com`)
+   - Click "Save"
+   - Check "Enforce HTTPS" (after DNS propagates)
+
+2. **In Google Domains DNS Settings:**
+   - Log into your Google Domains account
+   - Select your domain
+   - Go to "DNS" tab
+   - Delete any existing A records for @ (root domain)
+   - Add the 4 A records listed above
+   - Add the CNAME record for www listed above
+   - Save changes
+
+3. **Wait for DNS Propagation:**
+   - DNS changes can take 24-48 hours to fully propagate
+   - You can check status at whatsmydns.net
+   - Your site will be available at both yourdomain.com and www.yourdomain.com
 
 ## SSL Certificate
 All recommended hosting providers offer free SSL certificates (https). This is crucial for:

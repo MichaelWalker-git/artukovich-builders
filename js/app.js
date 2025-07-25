@@ -200,16 +200,14 @@ class ArtukovichWebsite {
   }
 
   handleFormSubmit(e) {
-    e.preventDefault();
-    
     const form = e.target;
-    const formData = new FormData(form);
     const submitBtn = form.querySelector('button[type="submit"]');
     
-    // Validate all fields
+    // Validate all fields before submission
     const isValid = this.validateForm(form);
     
     if (!isValid) {
+      e.preventDefault(); // Prevent form submission if invalid
       this.showFormMessage('Please correct the errors above.', 'error');
       return;
     }
@@ -219,32 +217,12 @@ class ArtukovichWebsite {
     submitBtn.textContent = 'Sending...';
     submitBtn.disabled = true;
 
-    // Simulate form submission (replace with actual API call)
-    this.submitContactForm(formData)
-      .then(() => {
-        this.showFormMessage('Thank you! We\'ll contact you within 24 hours to discuss your project.', 'success');
-        form.reset();
-        this.trackFormSubmission();
-      })
-      .catch(() => {
-        this.showFormMessage('Sorry, there was an error sending your message. Please try again or call us directly.', 'error');
-      })
-      .finally(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-      });
-  }
-
-  async submitContactForm(formData) {
-    // Replace this with your actual form submission logic
-    // This could be a call to your backend API, email service, or form handler
+    // Track the submission for analytics
+    this.trackFormSubmission();
     
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulate successful submission
-        Math.random() > 0.1 ? resolve() : reject();
-      }, 2000);
-    });
+    // Let Formspree handle the actual submission and redirect
+    // Form will submit naturally to https://formspree.io/f/xjkvnbwv
+    // which will send email to william@artukovichbuilders.com
   }
 
   validateForm(form) {
